@@ -1,0 +1,10 @@
+@hourly /usr/local/bin/flexget --cron
+@daily python /home/pi/util/TorrentCleanup.py
+@daily python /home/pi/util/FolderCleanup.py
+* * * * * /home/pi/Scripts/delugeKickstart.sh
+15,30,45 * * * * /home/pi/Scripts/mkv2mp4.sh
+*/10 * * * * python /home/pi/Scripts/getCurrentNames.py
+
+SUDO:
+@reboot python /home/pi/Scripts/startups.py &
+* * * * * /home/pi/Scripts/delugeKickstarter.sh
