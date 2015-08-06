@@ -1,0 +1,72 @@
+templates:
+  torrent:
+    transmission:
+      host: localhost
+      port: 9091
+      username: transmission
+      password: transmissionpass
+    clean_transmission:
+      host: localhost
+      port: 9091
+      username: transmission
+      password: transmissionpass
+      finished_for: 10 minutes
+      min_ratio: 0
+
+tasks:
+  tv_show:
+    rss: http://showrss.info/feeds/all.rss
+    series:
+      - Better Call Saul
+      - Running Wild With Bear Grylls
+      - 12 Monkeys
+      - The Flash
+      - The Librarians
+      - Flash
+      - Twelve Monkeys
+      - Sons of Anarchy
+      - Arrow
+      - South Park
+      - Big Bang Theory
+      - The Walking Dead
+      - Hostages
+      - New Girl
+      - Supernatural
+      - How I Met Your Mother
+      - Suits
+      - The Mentalist
+      - Person of Interest
+      - Justified
+      - Nikita
+      - Game of Thrones
+      - Greys Anatomy
+      - White Collar
+      - Elementary
+      - Marvels Agents of S H I E L D
+      - Vikings
+      - Castle
+      - Homeland
+      - Hannibal
+      - True Blood
+      - Mythbusters
+      - Banshee
+      - Brooklyn Nine Nine
+      - Top Gear
+      - Cosmos A Space Time Odyssey
+      - 24
+      - Fargo
+      - Legends 2014
+      - Hell on Wheels
+      - Gotham
+      - Forever US
+      - Transporter The Series
+      - True Detective
+      - Mr Robot
+      - Last Week Tonight With John Oliver
+      - Welcome to Sweden
+    template: torrent
+
+schedules:
+  - tasks: tv_show
+    interval:
+      hours: 1
