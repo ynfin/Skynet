@@ -1,6 +1,6 @@
 #!/bin/bash
 
-logfile=/home/pi/var/www/disk/skynet/conversionlog.txt
+logfile="/var/www/data/disk/conversionlog.txt"
 now=$(date)
 
 rm $logfile
@@ -19,7 +19,7 @@ else
 fi
 
 echo "SINGLEFILES"
-SINGLEFILES=$(find /home/pi/var/www/disk/skynet -maxdepth 1 -name '*.avi' -o -name '*.mkv' -o -name '*.mp4')
+SINGLEFILES=$(find /var/www/data/disk/storage -maxdepth 1 -name '*.avi' -o -name '*.mkv' -o -name '*.mp4')
 echo -e "\n\nfound potential spelunkers:\n"
 echo $SINGLEFILES
 for singlefile in $SINGLEFILES; do
@@ -29,7 +29,7 @@ for singlefile in $SINGLEFILES; do
   mv $singlefile $newdirpath
 done
 
-FILES=$(find /home/pi/var/www/disk/skynet -name "*.mkv" -o -name '*.avi')
+FILES=$(find /var/www/data/disk/storage -name "*.mkv" -o -name '*.avi')
 echo -e "\n\nfound potential unconverted files:\n"
 echo $FILES
 echo -e "--------------------------------------\n\n"
@@ -82,7 +82,8 @@ for file in $FILES; do
       then
 	 echo "founc mkv file, only recoding sound"
          #if mkv --> no video codec needed
-         avconv -y -i $file -vcodec copy -acodec aac -strict experimental $file.mp4
+         ffmpeg -y -i $file -vcodec copy -acodec libfdk_aac -preset veryslow -vbr 5 $file.mp4
+         #avconv -y -i $file -vcodec copy -acodec aac -strict experimental -preset veryslow -vbr 5 $file.mp4
       else
 	 echo "non-mkv found, recoding video and audio!"
          #if other format --> libx264 codec, with -preset veryslow
@@ -91,7 +92,8 @@ for file in $FILES; do
 
       echo creating html videofile...
       HTMLFILE=$file.html
-      echo "<iframe src="$file".mp4></iframe>" > $HTMLFILE
+      HTMLPATH=${file#'/var/www/'}
+      echo "<iframe src="$HTMLPATH".mp4></iframe>" > $HTMLFILE
 
       rm $INCFILE
    else
